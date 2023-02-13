@@ -1,37 +1,66 @@
 #include <iostream>
 #include <vector>
 
-int main() {
-	int heap_size, input_num, cur_index = 0;
-	std::vector<int> heap;
-	heap.assign(3, 0);
-	
-	std::cin >> heap_size;
-	for (int i = 0; i < heap_size; ++i) {
-		std::cin >> input_num;
-		
-		if (heap.size() == 0) {
-			heap[cur_index] = input_num;
-		}
-		else if(heap[0] < input_num) {
-			
-			if (heap[cur_index] < input_num) {
-				std::cout << "heap[cur_index]: " << heap[cur_index] << ", input: " << input_num << std::endl;
-				heap[cur_index] = input_num;
-			}
-			else if (heap[cur_index] > input_num) {
-				std::cout << "heap[cur_index]: " << heap[cur_index] << ", input: " << input_num << std::endl;
+std::vector<unsigned int> sorted_vec;
 
-				int temp = heap[cur_index];
-				heap[cur_index] = input_num;
-				input_num = temp;
+void merge(std::vector<unsigned int>* vec, unsigned int left, unsigned int mid, unsigned int right) {
+	int i = left, 
+		j = mid + 1,
+		k = left, 
+		l = 0;
 
-				heap[cur_index] = input_num;
-			}
+	while (i < mid && j <= right) {
+		if ((*vec)[i] <= (*vec)[j]) {
+			sorted_vec[k++] = (*vec)[i++];
 		}
-		++cur_index;
+		else {
+			sorted_vec[k++] = (*vec)[j++];
+		}
 	}
 
-	for (int& n : heap)
-		std::cout << n << std::endl;
+	if (i < mid) {
+		for (l = j; l <= right; ++l) {
+			sorted_vec[k++] = (*vec)[l];
+		}
+	}
+	else {
+		for (l = i; l <= mid; ++l) {
+			sorted_vec[k++] = (*vec)[l];
+		}
+	}
+
+	for (l = left; l <= right; ++l) {
+		(*vec)[l] = sorted_vec[l];
+	}
+}
+
+void merge_sort(std::vector<unsigned int>* vec, unsigned int left, unsigned int right) {
+	int mid;
+
+	if (left < right) {
+		mid = (left + right) / 2;
+		
+		merge_sort(vec, left, mid);
+		merge_sort(vec, mid + 1, right);
+		merge(vec, left, mid, right);
+	}
+}
+
+int main() {
+	unsigned int count;
+	unsigned int temp;
+	std::cin >> count;
+	std::vector<unsigned int> numbers;
+
+	for (unsigned int i = 0; i < count; i++) {
+		std::cin >> temp;
+		numbers.push_back(temp);
+	}
+	sorted_vec.resize(numbers.size());
+
+	merge_sort(&numbers, 0, numbers.size());
+
+	for (unsigned int n : numbers) {
+		printf("%d\n", n);
+	}
 }
