@@ -1,0 +1,14 @@
+[6.18]
+1. 여러 개의 headerFile 들을 사용할 때,
+	a. 구조체/class를 사용할 경우 #ifndef/endif, #define 를 사용해서 구조체/Class 의 중복 선언을 방지하도록 하자.
+
+2. null과 nullptr의 차이점
+	C11 부터 적용된 매크로인 nullptr은 nullptr_t 타입의 매크로로 기존의 NULL은 C++ 에서는 0, C 에서는 void*로 사용되어
+	포인터를 초기화할 때, null을 사용하면 숫자 0이 들어갔습니다. (short? int? float? double? long?)
+	그러나 nullptr은 포인터를 초기화하기 위한 매크로로 사용되기 위해 만들어졌습니다.
+
+3. malloc function memory acquisition failed
+	malloc 함수는 항상 메모리를 성공적으로 확보하는 것이 아니라 매모리 잉여가 없을 경우 null을 반환할 수 있으므로,
+	compile time 에서는 문제가 없을 수 있지만 run time 에서는 문제가 발생할 수 있으므로 경고를 함.
+	-> 장기간 실행되는 프로그램의 경우 반드시 메모리 확보 실패를 대비할 수 있는 코드를 작성해둬야 한다.
+
