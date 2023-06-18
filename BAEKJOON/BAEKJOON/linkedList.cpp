@@ -36,6 +36,7 @@ void linkedList::insert(int data) {
 			}
 		}
 
+		// Max Number, add Last Node next link
 		ptr->next = newNode;
 	}
 }

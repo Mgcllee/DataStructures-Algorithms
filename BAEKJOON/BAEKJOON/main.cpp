@@ -1,22 +1,18 @@
-#pragma once
-
-#include "main.h"
-
-linkedList ll;
+#include <iostream>
+#include <set>
 
 int main() {
-	int input_count = 0;
-	std::cin >> input_count;
+	std::set<int> numbers;
 
-	// what's difference null and nullptr?
-	// -> null is 0(number), nullptr is empty pointer
-	ll.head = nullptr;
-
-	for (int i = 0; i < input_count; ++i) {
-		int inputNumber = -1;
-		std::cin >> inputNumber;
-		ll.insert(inputNumber);
+	int numberCount = NULL;
+	scanf_s("%d", &numberCount);
+	for (int i = 0; i < numberCount; ++i) {
+		int inputNumber;
+		scanf_s("%d", &inputNumber);
+		numbers.insert(inputNumber);
 	}
-
-	ll.printList();
+	
+	for (int n : numbers) {
+		printf("%d\n", n);
+	}
 }
