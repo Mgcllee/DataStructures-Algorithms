@@ -1,7 +1,7 @@
 #include "SortFunctions.h"
 
 template <typename T, typename seqCon>
-void quickSeqSort(seqCon& con, T start, T end, T cur) {
+void quickSeqSort(seqCon& con, T start, T end) {
     if (start >= end)    return;
 
     int pivot = start;
@@ -29,6 +29,6 @@ void quickSeqSort(seqCon& con, T start, T end, T cur) {
         }
     }
 
-    quickSeqSort(con, start, right - 1, cur);
-    quickSeqSort(con, right + 1, end, cur);
+    quickSeqSort(con, start, right - 1);
+    quickSeqSort(con, right + 1, end);
 }

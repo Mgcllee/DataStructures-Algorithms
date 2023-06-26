@@ -1,3 +1,3 @@
 
 template <typename T, typename seqCon>
-void quickSeqSort(seqCon& con, T start, T end, T cur);
+void quickSeqSort(seqCon& con, T start, T end);
