@@ -4,66 +4,78 @@
 #include "SortFunctions.h"
 
 #include <vector>
-#include <set>
 #include <algorithm>
+#include <set>
 
-/*
-전체 순회가 아닌 정렬기준변경을 사용하면 예외가 발생 -> 이미 정렬된 정수는 접근하지 않음.
-버블정렬 방식은 효율성이 떨이짐.
-*/
+int eratos(set<int>& num) {
+	vector<int> nums;
 
-void firstFunction() {
-    vector<int> numbers = { 2,1,3,4,1 };
-    // vector<int> numbers = { 0 };
-    vector<int> answer;
+	for (int i = 2; i <= *num.crbegin(); ++i) 
+		nums.push_back(i);
 
-    sort(numbers.begin(), numbers.end());
+	for (int i = 2; i <= *num.crbegin(); ++i) {
+		if (nums[i - 2] == 0) 
+			continue;
+		for (int j = i + i; j <= *num.crbegin(); j += i)
+			nums[j - 2] = 0;
+	}
 
-    for (int start = 0; start < numbers.size(); ++start) {
-        answer.push_back(numbers[start]);
+	int cnt = 0;
+	for (int n : nums) {
+		if (n == 0) continue;
+		cout << n << "->";
+		if (num.find(n) != num.end() && n != 0)
+			// cnt += 1;
+			cout << n;
+		cout << endl;
+	}
+	return cnt;
+}
+void failCase01() {
+	vector<int> nums = { 1,2,7,6,4 };
 
-        for (int cur = start + 1; cur < numbers.size(); ++cur) {
-            int sum = numbers[start] + numbers[cur];
+	/*
 
-            if (find(answer.begin(), answer.end(), sum) == answer.end()) {
-                // cout << "Push-" << sum << " = " << numbers[start] << " + " << numbers[cur] << endl;
+	[설계 단계]
+	1. nums의 숫자들을 홀수, 짝수로 구분하여 새로운 vector<int>에 저장한다.
+	2. 홀수 == 홀수 x 3 == 홀수 x 1 + 짝수 x 2 임을 이용하여 set<int>에 중복을 제거하면서 저장한다.
+	3. "에라토스테네스의 체"를 이용하여 set<int>에 저장되어 있는 숫자 중 가장 큰 수까지 소수들을 저장하는 컨테이너를 제작한다.
+	4. 소수가 저장되어 있는 컨테이너와 set<int> 컨테이너를 비교하여 소수를 걸러낸다.
 
-                cout << "\n\n======================\n";
-                for (int i : answer)
-                    cout << i << endl;
-                cout << "======================\n\n";
+	[실행 단계]
+	1. 홀수와 짝수를 정렬하여 실행할 경우, 테스트 케이스에 나와있는 것은 통과되나, 왜 가능한지 이해하지 못함.
 
-                answer.pop_back();
-                answer.push_back(sum);
-            }
-            else {
+	[실패 이유]
+	1. 3가지의 숫자의 합이라는 것에 대해 어떤 방식으로 해결해야 할지 방향을 못 잡음.
+	2. 반복문이 너무 많아 비효율적임.
 
-            }
-        }
-    }
+	*/
+
+
+	int answer = 0;
+	set<int> result;
+	vector<int> odds, evens;
+	for (int n : nums) (n % 2 == 0) ? evens.push_back(n) : odds.push_back(n);
+
+	sort(odds.begin(), odds.end());
+	sort(evens.begin(), evens.end());
+
+	for (int odd : odds) {
+		for (int i = 0; i < evens.size() - 1; ++i) {
+			result.insert(odd + evens[i] + evens[i + 1]);
+			cout << odd << " + " << evens[i] << " + " << evens[i + 1] << endl;
+		}
+	}
+	for (int i = 0; i < odds.size() - 2; ++i) {
+		result.insert(odds[i] + odds[i + 1] + odds[i + 2]);
+		cout << odds[i] << " + " << odds[i + 1] << " + " << odds[i + 2] << endl;
+	}
+
+	cout << eratos(result);
 }
 
 int main() {
-    vector<int> numbers = { 0, 1 };
-    vector<int> answer;
+	vector<int> nums = { 1,2,7,6,4 };
 
-    if(numbers.size() == 1) 
-
-    sort(numbers.begin(), numbers.end());
-    
-    vector<int>::iterator resultCur = answer.begin();
-
-    for (vector<int>::iterator start_it = numbers.begin(), cur_it = numbers.begin(); start_it < numbers.end(); ++start_it, cur_it = numbers.begin()) {
-        for (; cur_it < numbers.end(); ++cur_it) { 
-            int sum = *start_it + *cur_it;
-            
-            if (start_it != cur_it && find(answer.begin(), answer.end(), sum) == answer.end()) {
-                answer.push_back(sum);
-            }
-        }
-    }
-
-    sort(answer.begin(), answer.end());
-    for (int i : answer)
-        cout << i << endl;
+	
 }
