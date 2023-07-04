@@ -10,6 +10,8 @@
 int eratos(set<int>& num) {
 	vector<int> nums;
 
+	// 현재 result로 넘겨 num 변수로 전달받는 컨테이너가 정상적으로 전달되지 못함.
+
 	for (int i = 2; i <= *num.crbegin(); ++i) 
 		nums.push_back(i);
 
@@ -23,11 +25,8 @@ int eratos(set<int>& num) {
 	int cnt = 0;
 	for (int n : nums) {
 		if (n == 0) continue;
-		cout << n << "->";
 		if (num.find(n) != num.end() && n != 0)
-			// cnt += 1;
-			cout << n;
-		cout << endl;
+			cnt += 1;
 	}
 	return cnt;
 }
@@ -74,8 +73,39 @@ void failCase01() {
 	cout << eratos(result);
 }
 
-int main() {
-	vector<int> nums = { 1,2,7,6,4 };
+void Combination(vector<int> vec, vector<int> comb, int r, int index, int depth, set<int>& result) {
+	if (r == 0) {
+		int sum = 0;
+		for (int n : comb) {
+			cout << n << " + ";
+			// sum += n;
+		}
+		cout << endl;
+		// result.insert(sum);
+	}
+	else if (depth == vec.size()) {
+		return;
+	}
+	else {
+		comb[index] = vec[depth];
+		Combination(vec, comb, r - 1, index + 1, depth + 1, result);
 
+		Combination(vec, comb, r, index, depth + 1, result);
+	}
+}
+
+int main() {
+	vector<int> nums = { 1, 5, 6 };
+	set<int> result;
+	//=> 3개의 숫자를 모두 더하는 것이므로 '조합' 연산을 통해서 모든 경우의 결과를 구한다.	
 	
+	int selector = 3;
+	vector<int> comb(selector);
+	Combination(nums, comb, selector, 0, 0, result);
+
+	for (int n : result)
+		cout << n << endl;
+	cout << "===============\n";
+
+	cout << eratos(result);
 }
