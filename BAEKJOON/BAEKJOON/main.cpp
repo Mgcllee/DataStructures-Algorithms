@@ -47,23 +47,11 @@ void Combination(vector<int> vec, vector<int> comb, int r, int index, int depth,
 	}
 }
 
-bool Comp(pair<int, pair<double, double>>& a, pair<int, pair<double, double>>& b) {
-	return a.second.first / (float)a.second.second > b.second.first / (float)b.second.second;
-}
-
 int main() {
-	/*vector<int> nums = { 1, 2, 3, 4, 5, 7 , 8 };
-	vector<int> result;
-	int selector = 3;
-	vector<int> comb(selector);
-	Combination(nums, comb, selector, 0, 0, result);
-	cout << eratos(result);*/
+	double N = 3;
+	vector<int> stages = { 1, 1, 2, 2 };
 
-	int N = 5;
-	vector<int> stages = { 3, 3, 3, 3, 3 };
-	// <스테이비 번호, <현스테이지 인원, 도착한 인원>>
-
-	vector<int> answer;
+	vector<double> answer;
 	map<int, pair<double, double>> info;
 
 	for (int curStage = 1; curStage <= N; ++curStage) {
@@ -86,11 +74,13 @@ int main() {
 	}
 
 	vector<pair<int, pair<double, double>>> result(info.begin(), info.end());
-	sort(result.begin(), result.end(), Comp);
+	stable_sort(result.begin(), result.end(), 
+		[](const pair<int, pair<double, double>>& a, const pair<int, pair<double, double>>& b) {
+			return a.second.first / a.second.second > b.second.first / b.second.second;
+		});
 
 	for (auto p : result) {
-		// answer.push_back(p.first);
-		cout << p.first << ": " << p.second.first << "/" << p.second.second << endl;
-		// cout << p.first << endl;
+		answer.push_back(p.first);
+		// cout << p.first << ": " << p.second.first << "/" << p.second.second << endl;
 	}
 }

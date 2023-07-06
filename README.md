@@ -11,3 +11,7 @@ personal algorithm training
   1. 실패율(2019카카오 코테)에서 일부 채점 결과가 실패하였으나, 오류가 발생하는 테스트 케이스를 찾지 못함.
   2. 테스트 케이스에서는 값이 int에 전부 수용되는 값을 넣었지만 채점에서는 int의 범위 이상의 값 때문에<br/>
     문제가 발생하는 것이라고 예상.
+
+#[07.06] Programmers
+  1. Algorithm.h에서 std::sort() Function이 아닌 std::stable_sort() Function을 사용하여 문제해결
+  2. 안정 정렬((1, d), (2, b), (2, c), (3, a)에서(2, b), (2, c)는 변경되지 않는 정렬)을 사용함. 
