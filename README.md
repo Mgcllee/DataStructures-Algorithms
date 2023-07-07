@@ -15,3 +15,7 @@ personal algorithm training
 #[07.06] Programmers
   1. Algorithm.h에서 std::sort() Function이 아닌 std::stable_sort() Function을 사용하여 문제해결
   2. 안정 정렬((1, d), (2, b), (2, c), (3, a)에서(2, b), (2, c)는 변경되지 않는 정렬)을 사용함. 
+
+#[07.07] Programmers
+  1. vector<int>::iterator를 사용하는데 out_of_range 문제를 해결하지 못함.
+  2. vector의 안정적인 사용과 접근을 위해서 out_of_range를 방지할 수 있는 방법을 연구할 필요가 있음.
