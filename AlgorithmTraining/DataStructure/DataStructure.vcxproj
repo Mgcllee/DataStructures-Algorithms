@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{591a1bca-27d0-479d-9ccc-85ce0ce980a7}</ProjectGuid>
-    <RootNamespace>BAEKJOON</RootNamespace>
+    <ProjectGuid>{2dba4542-2a50-4bc3-b0d4-52c0a5fd1377}</ProjectGuid>
+    <RootNamespace>DataStructure</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -104,7 +104,6 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -128,18 +127,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="linkedList.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="SortFunctions.cpp" />
-    <ClCompile Include="SortFunctions.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="linkedList.h" />
-    <ClInclude Include="main.h" />
-    <ClInclude Include="StringFunctions.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="studyLog.txt" />
+    <ClCompile Include="DS_Main.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
