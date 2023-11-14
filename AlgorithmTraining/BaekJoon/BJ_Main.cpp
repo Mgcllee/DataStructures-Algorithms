@@ -1,73 +1,84 @@
-#include <iostream>
+﻿#include <iostream>
 #include <vector>
+#include <queue>
 
-void Permutation(bool* visited, std::vector<int>& vec, std::vector<int>& res, int cnt) {
-	if (cnt == vec.size()) {
-		for (auto a : res) {
-			std::cout << a << " ";
+
+int dijkstra(std::vector<std::pair<int, int>> edge[], int* dis, int start, int end) {
+	dis[start] = 0;
+	std::priority_queue<std::pair<int, int>> pq;
+	pq.push(std::make_pair(start, 0));
+
+	int cnt = 0;
+
+	while (!pq.empty()) {
+		int current = pq.top().first;
+		int dist = -pq.top().second;
+		pq.pop();
+
+		// 최단거리가 아닐 경우
+		if (dis[current] < dist) continue;
+
+		for (int i = 0; i < edge[current].size(); ++i) {
+			int next = edge[current][i].first;
+			int nextDist = dist + edge[current][i].second;
+
+			if (nextDist < dis[next]) {
+				dis[next] = nextDist;
+				pq.push(std::make_pair(next, -nextDist));
+				if (next == end) {
+					printf("%d -> %d\n", current, next);
+;					cnt += 1;
+				}
+			}
 		}
-		std::cout << std::endl;
-		return;
 	}
 
-	for (int i = 0; i < vec.size(); i++) {
-		if (visited[i] == 1)	continue;
-
-		visited[i] = 1;
-		res[cnt] = vec[i];
-		Permutation(visited, vec, res, cnt + 1);
-		visited[i] = 0;
-	}
+	return cnt;
 }
 
 int main() 
 {
-	std::vector<int> vec = { 1, 1, 2, 2, 3 };
-	std::vector<int> res(vec.size());
-	bool* visit = new bool[vec.size()];
-	Permutation(visit, vec, res, 0);
+	int M, N;
+	std::cin >> M >> N;
+	int** arr = new int* [M];
+	std::vector<std::pair<int, int>>* node = new std::vector<std::pair<int, int>>[M * N + 1];
+	// std::vector<std::pair<int, int>> node[100];
 
+	for (int i = 0; i < M; ++i) {
+		arr[i] = new int[N];
+		for (int j = 0; j < N; ++j) std::cin >> arr[i][j];
+	} 
+
+	for (int i = 0, num = 1; i < M; ++i) {
+		for (int j = 0; j < N && num <= N * M; ++j, ++num) {
+			// 좌, 상 노드
+			if ((j != 0) && (arr[i][j] > arr[i][j - 1])) node[num].push_back(std::make_pair(num - 1, std::abs(arr[i][j] - arr[i][j - 1])));
+			if ((i != 0) && (arr[i][j] > arr[i - 1][j])) node[num].push_back(std::make_pair(num - N, std::abs(arr[i][j] - arr[i - 1][j])));
+			// 우, 하 노드
+			if ((j != N - 1) && (arr[i][j] > arr[i][j + 1])) node[num].push_back(std::make_pair(num + 1, std::abs(arr[i][j] - arr[i][j + 1])));
+			if ((i != M - 1) && (arr[i][j] > arr[i + 1][j])) node[num].push_back(std::make_pair(num + N, std::abs(arr[i][j] - arr[i + 1][j])));
+		}
+	}
+
+	int* dis = new int[N * M + 1];
+	for (int i = 0; i < N * M + 1; ++i)
+		dis[i] = 10000 + 1;
+
+	std::cout << dijkstra(node, dis, 1, N * M);
 	return 0;
 
 
-	int testCnt, N;
-	std::cin >> testCnt;
-
-	/*
-	1. ������ ������ ����Ѵ�. (1 + 2 != 2 + 1)
-	2. ������ ������ 1, 2, 3�� �����Ѵ�.
-
-	i)  ���� 1�� ��
-	ii) 2�� �ϳ��� ����(����)�� ��
-	iii) 
-	*/
-
-	// 1) �迭�� ����� �������
-	for (int i = 0; i < testCnt; ++i) {
-		int result = 1;
-		std::cin >> N;
-		std::vector<int> vec;
-		vec.resize(N, 1);	//ũ�� N��ŭ 1�� ä��
-
-		while (vec.size() >= 2) {
-			for (auto N : vec)
-				std::cout << N << ", ";
-			std::cout << std::endl;
-
-			int last = *(vec.end() - 1);
-			// �ߺ����� ���ο� ���� ����
-			if (3 > *(vec.end() - 1) + last) {
-				vec.pop_back();
-				*(vec.end() - 1) += last;
-				result += vec.size();
-			}
-			// �ߺ��� ���� ����
-			else {
-				// ����O, ����X(������ (1, 2)�� (2, 1)�� �ߺ����� ó��)
-				
-			}
+	int min = INT_MAX, cnt = 0;
+	for (int i = 0; i < N * M; ++i) if (min > dis[i]) min = dis[i];
+	for (int i = 0; i < N * M; ++i) if (min == dis[i]) cnt += 1;
+	
+	for (int i = 0, num = 1; i < M; ++i) {
+		for (int j = 0; j < N && num <= N * M; ++j, ++num) {
+			printf("%d,\t", dis[num]);
 		}
-		
-		printf("result: %d\n", result);
+		printf("\n");
 	}
+
+	printf("%d", cnt);
+	return 0;
 }
