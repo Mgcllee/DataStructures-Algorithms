@@ -3,14 +3,22 @@
 
 std::vector<bool> visited; // bool visited[9];
 std::vector<std::vector<int>> adj;
+int M, N, cnt = 0;
 
 void dfs(int x)
 {
+
 	visited[x] = true;
-	std::cout << x << " ";
+	// std::cout << x << " "; // 경로 추적 표시
 	for (int i = 0; i < adj[x].size(); i++) // 인접한 노드 사이즈만큼 탐색
 	{
 		int y = adj[x][i];
+
+		if (x == M - 1 && y == N - 1) {
+			++cnt;
+			return;
+		}
+
 		if (!visited[y]) // 방문하지 않았으면 즉 visited가 False일 때 not을 해주면 True가 되므로 아래 dfs 실행
 			dfs(y); // 재귀적으로 방문
 	}
@@ -18,10 +26,9 @@ void dfs(int x)
 
 int main() 
 {
-	int M, N;
 	std::cin >> M >> N;
 	int** arr = new int* [M];
-	adj.assign(N * M, std::vector<int>());
+	adj.assign(N * M + 1, std::vector<int>());
 
 	for (int i = 0; i < M; ++i) {
 		arr[i] = new int[N];
@@ -38,7 +45,9 @@ int main()
 	}
 
 	visited.assign(adj.size(), false);
-	// dfs(1);
+	dfs(1);
+
+	std::cout << cnt;
 
 	return 0;
 }
