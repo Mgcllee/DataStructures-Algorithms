@@ -1,53 +1,48 @@
 ﻿#include <iostream>
 #include <vector>
 
-std::vector<bool> visited; // bool visited[9];
-std::vector<std::vector<int>> adj;
-int M, N, cnt = 0;
+std::vector<std::vector<int>> memvec;
+int M, N;
+int dx[] = {0, 0, -1, 1};
+int dy[] = {-1, 1, 0, 0};
 
-void dfs(int x)
+int MemoDFS(int** arr, int x, int y)
 {
+	if (x == M - 1 && y == N - 1) return 1;
+	if (memvec[x][y] != -1) return memvec[x][y];
 
-	visited[x] = true;
-	// std::cout << x << " "; // 경로 추적 표시
-	for (int i = 0; i < adj[x].size(); i++) // 인접한 노드 사이즈만큼 탐색
-	{
-		int y = adj[x][i];
 
-		if (x == M - 1 && y == N - 1) {
-			++cnt;
-			return;
+	memvec[x][y] = 0;
+	for (int i = 0; i < 4; ++i) {
+		int nx = x + dx[i];
+		int ny = y + dy[i];
+
+		if (nx < 0 || nx >= M || ny < 0 || ny >= N) continue;
+
+		if (arr[x][y] > arr[nx][ny]) {
+			memvec[x][y] += MemoDFS(arr, nx, ny);
 		}
-
-		if (!visited[y]) // 방문하지 않았으면 즉 visited가 False일 때 not을 해주면 True가 되므로 아래 dfs 실행
-			dfs(y); // 재귀적으로 방문
 	}
+
+	return memvec[x][y];
 }
 
 int main() 
 {
 	std::cin >> M >> N;
 	int** arr = new int* [M];
-	adj.assign(N * M + 1, std::vector<int>());
+	std::vector<int> buf;
+	buf.assign(N, -1);
+	memvec.assign(M, buf);
 
 	for (int i = 0; i < M; ++i) {
 		arr[i] = new int[N];
-		for (int j = 0; j < N; ++j) std::cin >> arr[i][j];
-	}
-
-	for (int i = 0, num = 1; i < M; ++i) {
-		for (int j = 0; j < N && num <= N * M; ++j, ++num) {
-			if (0 < j && (arr[i][j - 1] < arr[i][j])) adj[num].push_back(num - 1);		// 좌측이동 가능성 확인
-			if (0 < i && (arr[i - 1][j] < arr[i][j])) adj[num].push_back(num - N);		// 상향이동 가능성 확인
-			if (j < N - 1 && (arr[i][j + 1] < arr[i][j])) adj[num].push_back(num + 1);	// 우측이동 가능성 확인
-			if (i < M - 1 && (arr[i + 1][j] < arr[i][j])) adj[num].push_back(num + N);	// 하향이동 가능성 확인
+		for (int j = 0; j < N; ++j) {
+			std::cin >> arr[i][j];
+			memvec[i][j] = -1;
 		}
 	}
 
-	visited.assign(adj.size(), false);
-	dfs(1);
-
-	std::cout << cnt;
-
+	std::cout << MemoDFS(arr, 0, 0);
 	return 0;
 }
