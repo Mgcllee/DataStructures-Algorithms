@@ -1,48 +1,43 @@
 ﻿#include <iostream>
 #include <vector>
 
-std::vector<std::vector<int>> memvec;
-int M, N;
-int dx[] = {0, 0, -1, 1};
-int dy[] = {-1, 1, 0, 0};
-
-int MemoDFS(int** arr, int x, int y)
+void Permutation(bool* visited, std::vector<short>& vec, std::vector<short>& res, short cnt)
 {
-	if (x == M - 1 && y == N - 1) return 1;
-	if (memvec[x][y] != -1) return memvec[x][y];
-
-
-	memvec[x][y] = 0;
-	for (int i = 0; i < 4; ++i) {
-		int nx = x + dx[i];
-		int ny = y + dy[i];
-
-		if (nx < 0 || nx >= M || ny < 0 || ny >= N) continue;
-
-		if (arr[x][y] > arr[nx][ny]) {
-			memvec[x][y] += MemoDFS(arr, nx, ny);
+	if (cnt == static_cast<short>(res.size())) {
+		for (short n : res) {
+			printf("%d ", n);
 		}
+		printf("\n");
+		return;
 	}
 
-	return memvec[x][y];
+	for (short i = 0; i < static_cast<short>(vec.size()); ++i) {
+		if (visited[i] == true) continue;
+
+		visited[i] = true;
+		res[cnt] = vec[i];
+		Permutation(visited, vec, res, cnt + 1);
+		visited[i] = false;
+	}
 }
 
-int main() 
-{
-	std::cin >> M >> N;
-	int** arr = new int* [M];
-	std::vector<int> buf;
-	buf.assign(N, -1);
-	memvec.assign(M, buf);
+int main() {
+	int N, M;
+	std::cin >> N >> M;
 
-	for (int i = 0; i < M; ++i) {
-		arr[i] = new int[N];
-		for (int j = 0; j < N; ++j) {
-			std::cin >> arr[i][j];
-			memvec[i][j] = -1;
-		}
+	std::vector<short> vec;	// 1부터 N까지의 숫자 정보
+	std::vector<short> res(M);	// 순열로 구한 순열 결과
+
+	// 숫자 정보 입력
+	for (short i = 1; i <= N; ++i) {
+		vec.push_back(i);
 	}
 
-	std::cout << MemoDFS(arr, 0, 0);
+	// 방문 기록 남기기
+	bool* visited = new bool[N];
+	for (int i = 0; i < N; ++i) visited[i] = false;
+
+	Permutation(visited, vec, res, 0);
+
 	return 0;
 }
