@@ -1,30 +1,21 @@
 ﻿#include <iostream>
-#include <vector>
+// #include <map>
 
-void Combination(int depth, std::vector<int>& res, std::vector<int>& vec, int next)
-{
-	if (depth == res.size()) {
-		for (int n : res)
-			printf("%d ", n);
-		printf("\n");
-		return;
-	}	
-
-	for (int i = next; i < vec.size(); ++i) {
-		res[depth] = vec[i];
-		Combination(depth + 1, res, vec, i + 1);
-	}
-}
+/*
+Queue의 FIFO를 사용하기 때문에
+순서가 매우 중요하다.
+(Pop된 값이 Push인지 아닌지 파악하기 위해)
+*/
 
 int main() {
-	int N, M;
-	std::cin >> N >> M;
+	int testCnt = 0;
+	std::cin >> testCnt;
 
-	std::vector<int> vec;
-	std::vector<int> res(M);
-	for (int i = 1; i <= N; ++i) vec.push_back(i);
+	for (int i = 0; i < testCnt; ++i) {
+		// std::multimap<int, int, std::greater<int>> map;
+		int cnt, target;
+		std::cin >> cnt >> target;
 
-	Combination(0, res, vec, 0);
-
-	return 0;
+		
+	}
 }
