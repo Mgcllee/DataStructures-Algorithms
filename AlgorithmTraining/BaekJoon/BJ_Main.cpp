@@ -1,19 +1,6 @@
 ﻿#include <iostream>
+#include <list>
 #include <set>
-
-/*
-Queue의 FIFO를 사용하기 때문에
-순서가 매우 중요하다.
-(Pop된 값이 Push인지 아닌지 파악하기 위해)
-*/
-
-struct myOrder
-{
-	bool operator() (const std::pair<int, int>& left, const std::pair<int, int>& right) const
-	{
-		return left.first > right.first;
-	}
-};
 
 int main() {
 	int testCnt = 0;
@@ -22,15 +9,35 @@ int main() {
 	for (int i = 0; i < testCnt; ++i) {
 		int cnt, target;
 		std::cin >> cnt >> target;
-		std::multiset<std::pair<int, int>, myOrder> set;
-		
+		std::list<std::pair<int, int>> list;
+		std::multiset<int, std::greater<int>> set;
+
+		// Push/Pop의 기준은 temp 값
 		for (int j = 0, temp; j < cnt; ++j) {
 			std::cin >> temp;
-			set.insert(std::make_pair(temp, j));
+			list.push_back(std::make_pair(temp, j));
+			set.insert(temp);
 		}
 
-		for (auto p : set) {
-			printf("(%d, %d), ", p.first, p.second);
-		}	printf("\n");
+		int index = 1;
+		for (int n : set) {
+			while (true) {
+				if ((n == list.front().first) && (target == list.front().second)) {
+					printf("%d\n", index);
+					index = -1;
+					break;
+				}
+				else if (n == list.front().first) {
+					index += 1;
+					list.pop_front();
+					break;
+				}
+				else {
+					list.push_back(list.front());
+					list.pop_front();
+				}
+			}
+			if (-1 == index) break;
+		}
 	}
 }
