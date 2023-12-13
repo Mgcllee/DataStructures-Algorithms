@@ -1,25 +1,23 @@
 ﻿#include <iostream>
 
-int size; 
-long long cnt;
-long long DP[91];
-
-long long Com(int currSize)
-{
-	if (2 >= currSize) {
-		return 1;
-	}
-
-	if (DP[currSize] != 0) {
-		return DP[currSize];
-	}
-
-	return DP[currSize] = Com(currSize - 2) + Com(currSize - 1);
-}
-
 int main()
 {
-	std::cin >> size;
-	std::cout << Com(size);
+	int cnt, time;
+	std::cin >> cnt >> time;
+	int* arr = new int[cnt];
+	int* sum = new int[time];
+
+	for (int i = 0; i < cnt; ++i) {
+		std::cin >> arr[i];
+	}
+	for (int i = 0, start, end; i < time; ++i) {
+		std::cin >> start >> end;
+
+		int sum = 0;
+		for (int j = start - 1; j <= end - 1; ++j) {
+			sum += arr[j];
+		}
+		std::cout << sum << std::endl;
+	}
 	return 0;
 }
