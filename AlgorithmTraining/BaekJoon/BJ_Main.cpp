@@ -1,23 +1,28 @@
 ﻿#include <iostream>
+#include <vector>
+
+int maxSum = 0;
+int cnt = 0;
+
+void schedule(int day, std::vector<std::pair<int, int>> vec, int sum) {
+	if (day > cnt) return;
+
+	maxSum = maxSum >= sum ? maxSum : sum;
+	for (int i = day; i < cnt; ++i) {
+		schedule(vec[i].first + i, vec, sum + vec[i].second);
+	}
+}
 
 int main()
 {
-	int cnt, time;
-	std::cin >> cnt >> time;
-	int* arr = new int[cnt];
-	int* sum = new int[time];
-
-	for (int i = 0; i < cnt; ++i) {
-		std::cin >> arr[i];
+	std::cin >> cnt;
+	std::vector<std::pair<int, int>> vec;
+	for (int i = 0, days, price; i < cnt; ++i) {
+		std::cin >> days >> price;
+		vec.push_back({ days, price });
 	}
-	for (int i = 0, start, end; i < time; ++i) {
-		std::cin >> start >> end;
 
-		int sum = 0;
-		for (int j = start - 1; j <= end - 1; ++j) {
-			sum += arr[j];
-		}
-		std::cout << sum << std::endl;
-	}
-	return 0;
+	schedule(0, vec, 0);
+
+	std::cout << maxSum;
 }
