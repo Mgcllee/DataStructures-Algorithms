@@ -9,7 +9,7 @@ struct ORDER {
 		if (lhs.first > rhs.first) return true;
 		else if (lhs.first < rhs.first) return false;
 		else {
-			return lhs.second > lhs.first;
+			return lhs.second > lhs.second;
 		}
 	}
 };
@@ -20,38 +20,34 @@ int main()
 	std::cin.tie(NULL);
 	std::cout.tie(NULL);
 
-	int N, firstVal = 0;
+	int N, maxCnt = 1;
 	std::cin >> N;
 	std::map<int, int> map;
 	std::multiset<std::pair<int, int>, ORDER> set;
 	for (int i = 0, temp; i < N; ++i) {
 		std::cin >> temp;
-		if (i == 0) firstVal = temp;
 		if (false == map.insert({ temp, 1 }).second) {
-			map.find(temp)->second += 1;
+			temp = map.find(temp)->second += 1;
+			if (temp > maxCnt) maxCnt = temp;
 		}
 	}
 
-	long long sum = 0;
-	int index = 0, cenVal = 0;
+	double sum = 0;
+	int index = 0, cenVal = -4001;
 	for (auto p : map) {
 		sum += (p.first * p.second);
 		index += p.second;
-		if (index == N / 2 + 1) cenVal = p.first;
-		set.insert({p.second, p.first});
+		if (index == N / 2 + 1 || (cenVal == -4001 && (index > N / 2 + 1))) cenVal = p.first;
+		if (maxCnt == p.second)
+			set.insert({ p.second, p.first });
 	}
 
-	auto first_p = *set.begin();
-	for (auto p : set) {
-		if (first_p != p && first_p.first == p.first && first_p.first > p.first) {
-			first_p = p;
-		}
-		
-	}
-
-	printf("%d\n", (int)round((float)sum / (float)N));
+	double x = sum / N;
+	double avg = round(x);
+	if (avg == -0) avg = 0;
+	printf("%d\n", (int)avg);
 	printf("%d\n", cenVal);
-	printf("%d\n", (set.size() == N) ? firstVal : (--set.rbegin())->second);
+	printf("%d\n", (set.size() > 1 ? (++set.begin())->second : set.begin()->second));
 	printf("%d\n", (*map.rbegin()).first - (*map.begin()).first);
 
 	return 0;
