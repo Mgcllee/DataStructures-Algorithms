@@ -17,17 +17,6 @@ int main() {
 	}
 	int avg = std::round(sum / (N * M));
 
-	// 평탄화의 최소시간과 평균위치값
-	/*
-	평탄화할 때 위치값의 범위는
-	블록의 최저높이부터 최고 높이 사이의 값에서만 존재한다.
-	
-	(1 <= 최저높이 <= 최고높이 <= 64)
-
-	그러나 시간경과는 최저, 최고 높이에 맞춰 비례하지 않음
-
-	*/
-	
 	while (avg >= 0) {
 		long long usedBlock = 0;
 		long long saveBlock = 0;
@@ -35,9 +24,9 @@ int main() {
 			for (int j = 0; j < M; ++j) {
 				int dis = arr[i][j] - avg;
 				if (dis > 0)
-					saveBlock += dis;	// 제거 2초
+					saveBlock += dis;
 				else if (dis < 0)
-					usedBlock -= dis;	// 설치 1초
+					usedBlock -= dis;
 			}
 		}
 
