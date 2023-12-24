@@ -1,30 +1,35 @@
 ﻿#include <iostream>
-#include <vector>
+#include <set>
+
+struct WORD_ORDER {
+	bool operator() (const std::string& lhs, const std::string& rhs) const
+	{
+		if (lhs.size() < rhs.size()) {
+			return true;
+		}
+		else if (lhs.size() > rhs.size()) {
+			return false;
+		}
+
+		for (int i = 0; i < lhs.size(); ++i) {
+			if (lhs[i] == rhs[i]) continue;
+			return lhs[i] < rhs[i];
+		}
+		return false;
+	}
+};
 
 int main() {
-	int seq;
-	std::cin >> seq;
-	int* arr = new int[seq];
-	for (int i = 0; i < seq; ++i) {
-		std::cin >> arr[seq - 1 - i];
+	int N;
+	std::cin >> N;
+	std::set<std::string, WORD_ORDER> set;
+	for (int i = 0; i < N; ++i) {
+		std::string buf;
+		std::cin >> buf;
+		set.insert(buf);
 	}
-
-	std::vector<char> vec;
-	for (int i = 1; i <= seq; ++i) {
-		if (i == arr[i - 1]) vec.push_back('+');
-		else if (i < arr[i - 1]) {
-			for (int j = i; j <= seq; ++j) {
-				if (j < arr[i - 1]) vec.push_back('+');
-				else {
-					vec.push_back('-');
-					break;
-				}
-			}
-		}
-		else vec.push_back('-');
-	}
-
-	printf("=================\n");
-	for (char c : vec)
-		printf("%c\n", c);
+	
+	for (auto s : set)
+		std::cout << s << std::endl;
+	return 0;
 }
