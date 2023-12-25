@@ -1,30 +1,38 @@
 ﻿#include <iostream>
-#include <list>
-#include <cmath>
+#include <string>
 
 int main() {
-	int n;
-	std::cin >> n;
-	if (n == 0) {
-		printf("0\n");
-		return 0;
-	}
+	while (true) {
+		std::string buf;
+		std::getline(std::cin, buf);
+		if (buf == ".") break;
+		std::string check_str;
+		bool answer = true;
+		for (char c : buf) {
+			if (c != '(' && c != ')' && c != '[' && c != ']') continue;
+			
+			if (c == '(' || c == '[') {
+				check_str.push_back(c);
+				answer = false;
+			} else if (false == check_str.empty()) {
 
-	std::list<int> list;
-	for (int i = 0, temp; i < n; ++i) {
-		std::cin >> temp;
-		list.push_back(temp);
+				if ((*check_str.rbegin() == '(' && c == ')')
+					|| (*check_str.rbegin() == '[' && c == ']')) {
+					check_str.pop_back();
+					answer = true;
+				}
+				else {
+					answer = false;
+					break;
+				}
+			}
+			else {
+				answer = false;
+				break;
+			}
+		}
+		if (answer && check_str.empty()) printf("yes\n");
+		else printf("no\n");
 	}
-	list.sort();
-
-	int expt_cnt = (int)std::round((float)n * 0.3f * 0.5f);
-	for (int i = 0; i < expt_cnt; ++i) {
-		if (false == list.empty()) list.pop_front();
-		if (false == list.empty()) list.pop_back();
-	}
-	float sum = 0;
-	for (int n : list)
-		sum += n;
-	printf("%d", (int)(std::round(sum / list.size())));
 	return 0;
 }
