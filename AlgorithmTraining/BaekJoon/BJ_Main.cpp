@@ -1,38 +1,24 @@
 ﻿#include <iostream>
-#include <string>
+#include <unordered_map>
 
 int main() {
-	while (true) {
-		std::string buf;
-		std::getline(std::cin, buf);
-		if (buf == ".") break;
-		std::string check_str;
-		bool answer = true;
-		for (char c : buf) {
-			if (c != '(' && c != ')' && c != '[' && c != ']') continue;
-			
-			if (c == '(' || c == '[') {
-				check_str.push_back(c);
-				answer = false;
-			} else if (false == check_str.empty()) {
+	std::cin.tie(NULL);
+	std::ios::sync_with_stdio(false);
 
-				if ((*check_str.rbegin() == '(' && c == ')')
-					|| (*check_str.rbegin() == '[' && c == ']')) {
-					check_str.pop_back();
-					answer = true;
-				}
-				else {
-					answer = false;
-					break;
-				}
-			}
-			else {
-				answer = false;
-				break;
-			}
-		}
-		if (answer && check_str.empty()) printf("yes\n");
-		else printf("no\n");
+	int N, cnt;
+	std::cin >> N >> cnt;
+	std::unordered_map<std::string, std::string> map;
+	for (int i = 0; i < N; ++i) {
+		std::string name, pass;
+		std::cin >> name >> pass;
+		map.insert(std::make_pair(name, pass));
 	}
+
+	for (int i = 0; i < cnt; ++i) {
+		std::string buf;
+		std::cin >> buf;
+		std::cout << map[buf] << '\n';
+	}
+
 	return 0;
 }
