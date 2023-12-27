@@ -1,23 +1,23 @@
 ﻿#include <iostream>
-#include <unordered_map>
 
 int main() {
 	std::cin.tie(NULL);
 	std::ios::sync_with_stdio(false);
 
-	int N, cnt;
-	std::cin >> N >> cnt;
-	std::unordered_map<std::string, std::string> map;
-	for (int i = 0; i < N; ++i) {
-		std::string name, pass;
-		std::cin >> name >> pass;
-		map.insert(std::make_pair(name, pass));
+	int N;
+	std::cin >> N;
+
+	int* DP = new int[12];
+	DP[1] = 1;
+	DP[2] = 2;
+	DP[3] = 4;
+	for (int j = 4; j < 11; ++j) {
+		DP[j] = DP[j - 3] + DP[j - 2] + DP[j - 1];
 	}
 
-	for (int i = 0; i < cnt; ++i) {
-		std::string buf;
-		std::cin >> buf;
-		std::cout << map[buf] << '\n';
+	for (int i = 0, temp; i < N; ++i) {
+		std::cin >> temp;
+		printf("%d\n", DP[temp]);
 	}
 
 	return 0;
