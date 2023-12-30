@@ -1,23 +1,32 @@
 ﻿#include <iostream>
 
 int main() {
-	std::cin.tie(NULL);
-	std::ios::sync_with_stdio(false);
+	int T;
+	std::cin >> T;
 
-	int N;
-	std::cin >> N;
+	for (int t = 0; t < T; ++t) {
+		int N, M, K, cnt = 0;
+		std::cin >> N >> M >> K;
 
-	int* DP = new int[12];
-	DP[1] = 1;
-	DP[2] = 2;
-	DP[3] = 4;
-	for (int j = 4; j < 11; ++j) {
-		DP[j] = DP[j - 3] + DP[j - 2] + DP[j - 1];
-	}
+		if (K == 1 && M == 1 && N != 1) {
+			printf("-1\n");
+			continue;
+		}
 
-	for (int i = 0, temp; i < N; ++i) {
-		std::cin >> temp;
-		printf("%d\n", DP[temp]);
+		while (0 < N) {
+			cnt += 1;
+			
+			if (N >= M * K) {
+				N -= (M * K);
+				if (N > 0) {
+					cnt += 1;
+					N += 1;
+				}
+			}
+			else break;
+		}
+
+		printf("%d\n", cnt);
 	}
 
 	return 0;
