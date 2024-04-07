@@ -2,8 +2,8 @@
 #include <vector>
 #include <cstring>
 
-std::vector<int> vec[1001];
-bool visited[1001];
+std::vector<int>* vec;
+bool* visited;
 
 void DFS(int X)
 {
@@ -25,9 +25,9 @@ int main()
 	int N, M, cnt = 0;
 	std::cin >> N >> M;
 
-	// vec = new std::vector<int>[N + 1];
-	// visited = new bool[N + 1];
-	memset(visited, false, 1001);
+	vec = new std::vector<int>[N + 1];
+	visited = new bool[N + 1];
+	memset(visited, false, N + 1);
 
 	for (int i = 0; i < M; ++i) {
 		int start_node, end_node;
