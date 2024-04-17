@@ -15,7 +15,7 @@ int main()
 	arr = new int[size];
 	temp = new std::pair<int, int>[size];
 	
-	std::fill(arr, arr + size, MIN);
+	std::fill_n(arr, size, MIN);
 	for (int i = 0, num; i < size; ++i)
 	{
 		std::cin >> num;
