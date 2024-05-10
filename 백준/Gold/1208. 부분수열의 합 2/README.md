@@ -1,6 +1,7 @@
 # [Gold I] 부분수열의 합 2 - 1208 
 
 [문제 링크](https://www.acmicpc.net/problem/1208) 
+[참고 블로그](https://nsgg.tistory.com/324)
 
 ### 성능 요약
 
