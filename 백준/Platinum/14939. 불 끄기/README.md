@@ -1,6 +1,7 @@
 # [Platinum IV] 불 끄기 - 14939 
 
-[문제 링크](https://www.acmicpc.net/problem/14939) 
+[문제 링크](https://www.acmicpc.net/problem/14939)  
+[참고 사이트](https://hyeo-noo.tistory.com/72)
 
 ### 성능 요약
 
