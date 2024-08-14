@@ -1,0 +1,27 @@
+[6.18]
+1. 여러 개의 headerFile 들을 사용할 때,
+	a. 구조체/class를 사용할 경우 #ifndef/endif, #define 를 사용해서 구조체/Class 의 중복 선언을 방지하도록 하자.
+
+2. null과 nullptr의 차이점
+	C11 부터 적용된 매크로인 nullptr은 nullptr_t 타입의 매크로로 기존의 NULL은 C++ 에서는 0, C 에서는 void*로 사용되어
+	포인터를 초기화할 때, null을 사용하면 숫자 0이 들어갔습니다. (short? int? float? double? long?)
+	그러나 nullptr은 포인터를 초기화하기 위한 매크로로 사용되기 위해 만들어졌습니다.
+
+3. malloc function memory acquisition failed
+	malloc 함수는 항상 메모리를 성공적으로 확보하는 것이 아니라 매모리 잉여가 없을 경우 null을 반환할 수 있으므로,
+	compile time 에서는 문제가 없을 수 있지만 run time 에서는 문제가 발생할 수 있으므로 경고를 함.
+	-> 장기간 실행되는 프로그램의 경우 반드시 메모리 확보 실패를 대비할 수 있는 코드를 작성해둬야 한다.
+
+4. BAEKJOON 2751번
+	a. cout, cin 과 같은 함수는 printf, scanf 보다 현저히 느려 시간 초과 발생
+	b. set 과 같은 STL Container 보다 Custom linkedList가 느릴 수 있음
+
+[6.19]
+1. BAEKJOON 10989번
+	a. 여러 개의 수를 저장할 때, Squence Container가 아닌 associate container를 사용하여 메모리의 사용량을 줄일 수 있다.
+	b. std::endl 과 같은 기능을 사용할 경우, flush 를 사용하기 때문에 시간초과가 발생할 수 있다.
+
+[6.24]
+1. Programmers Lv.1 - "문자열 내 마음대로 정렬하기"
+	a. 퀵정렬을 사용하여 문자열들을 정렬하려고 하였으나, Container에 담긴 값들에 중복이 있을 경우 Quick Sort의 성능이 떨어질 수 있다!
+	b. 
