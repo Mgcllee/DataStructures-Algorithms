@@ -1,0 +1,6 @@
+## Local Folder
+.vscode/
+
+## Local File
+stdafx.cpp
+*.exe
