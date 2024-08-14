@@ -5,9 +5,9 @@ bin/
 
 
 ## Local File
-stdafx.cpp
-Program.cs
-
 *.exe
 DataStructures-Algorithms.code-workspace
 *.csproj
+
+stdafx.cpp
+Program.cs
