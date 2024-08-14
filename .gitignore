@@ -1,7 +1,11 @@
 ## Local Folder
 .vscode/
+obj/
+bin/
+
 
 ## Local File
 stdafx.cpp
 *.exe
 DataStructures-Algorithms.code-workspace
+*.csproj
